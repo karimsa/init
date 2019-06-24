@@ -20,6 +20,17 @@ function fetch_file() {
 	fi
 }
 
+function add_npm_field() {
+	key="$1"
+	value="$2"
+
+	if test "`jq .$key package.json`" = "null"; then
+		echo "Adding $key to package.json: $value"
+		jq ".$key = \"$value\"" package.json | unexpand -t2 > package.new.json
+		mv package.new.json package.json
+	fi
+}
+
 function add_npm_script() {
 	action="$1"
 	cmd="$2"
@@ -68,6 +79,18 @@ fi
 
 export projectDir="$PWD"
 echo "Project directory: $projectDir"
+
+if ! test -e "package.json"; then
+	echo "Creating: package.json"
+	echo '{}' > package.json
+fi
+
+if ! grep 'node_modules' .gitignore &>/dev/null; then
+	echo 'node_modules' >> .gitignore
+fi
+if ! grep '.log' .gitignore &>/dev/null; then
+	echo '*.log' >> .gitignore
+fi
 
 echo "Installing tools ..."
 add_npm_dev_dep eslint
