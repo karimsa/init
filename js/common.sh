@@ -4,10 +4,21 @@ set -o pipefail
 
 function fetch_file() {
 	file="$1"
+
+	output="$2"
+	if test -z "$output"; then
+		output="$file"
+	fi
+
 	if ! test -e "$file"; then
-		curl -sSL "http://init.alibhai.co/$file" >> "$file"
+		curl -sSL "http://init.alibhai.co/$file" >> "$output"
 	fi
 }
+
+if ! which jq &>/dev/null; then
+	echo "jq is not installed, but is required"
+	exit 1
+fi
 
 export projectDir="$PWD"
 echo "Project directory: $projectDir"
@@ -35,6 +46,3 @@ fetch_file ".vscode/settings.json"
 echo "Setting up linter ..."
 fetch_file ".prettierrc"
 fetch_file ".eslintrc"
-
-echo "Setting up babel ..."
-fetch_file ".babelrc"
