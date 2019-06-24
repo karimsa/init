@@ -11,6 +11,8 @@ fetch_file "js/react/app.jsx" "src/app.jsx"
 fetch_file "js/react/lib/axios.js" "src/lib/axios.js"
 fetch_file "js/react/views/home.jsx" "src/views/home.jsx"
 
+add_npm_dep bootstrap
+add_npm_dep @fortawesome/fontawesome-free
 add_npm_dev_dep parcel-bundler
 run_npm_install
 
