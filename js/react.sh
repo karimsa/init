@@ -14,5 +14,5 @@ fetch_file "js/react/views/home.jsx" "src/views/home.jsx"
 npm install --save-dev \
 	parcel-bundler
 
-jq '.scripts.start = .scripts.start // "parcel src/index.html"' package.json > package.new.json && mv package.new.json package.json
-jq '.scripts.build = .scripts.build // "parcel build src/index.html"' package.json > package.new.json && mv package.new.json package.json
+add_npm_script "start" "parcel src/index.html"
+add_npm_script "build" "parcel build src/index.html"

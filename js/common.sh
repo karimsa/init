@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 set -o pipefail
+set -x
 
 function fetch_file() {
 	file="$1"
@@ -13,6 +14,18 @@ function fetch_file() {
 	if ! test -e "$output"; then
 		echo "Creating: $output"
 		curl -sSL "http://init.alibhai.co/$file" >> "$output"
+	fi
+}
+
+function add_npm_script() {
+	action="$1"
+	cmd="$2"
+
+	if test "`jq .scripts.$action`" = "null"; then
+		echo "Adding npm script: $action"
+		jq '.scripts = .scripts // {}' package.json > package.new.json && mv package.new.json package.json
+		jq ".scripts.$action = 'npm run build -- -w'" package.json | unexpand -t2 > package.new.json
+		mv package.new.json package.json
 	fi
 }
 
