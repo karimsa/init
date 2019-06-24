@@ -11,6 +11,7 @@ function fetch_file() {
 	fi
 
 	if ! test -e "$file"; then
+		echo "Creating: $output"
 		curl -sSL "http://init.alibhai.co/$file" >> "$output"
 	fi
 }
