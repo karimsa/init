@@ -13,5 +13,6 @@ add_npm_script "watch" "npm run build -- -w"
 
 # add package target
 add_npm_field "main" "dist/index.js"
+ignore_file "dist"
 
 run_npm_install

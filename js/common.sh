@@ -72,6 +72,13 @@ function run_npm_install() {
 	fi
 }
 
+function ignore_file() {
+	if ! grep "$1" .gitignore &>/dev/null; then
+		echo "Adding to gitignore: $1"
+		echo "$1" >> .gitignore
+	fi
+}
+
 if ! which jq &>/dev/null; then
 	echo "jq is not installed, but is required"
 	exit 1
@@ -85,12 +92,8 @@ if ! test -e "package.json"; then
 	echo '{}' > package.json
 fi
 
-if ! grep 'node_modules' .gitignore &>/dev/null; then
-	echo 'node_modules' >> .gitignore
-fi
-if ! grep '.log' .gitignore &>/dev/null; then
-	echo '*.log' >> .gitignore
-fi
+ignore_file 'node_modules'
+ignore_file '*.log'
 
 echo "Installing tools ..."
 add_npm_dev_dep eslint
