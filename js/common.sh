@@ -29,6 +29,32 @@ function add_npm_script() {
 	fi
 }
 
+deps=""
+devDeps=""
+
+function add_npm_dep() {
+	package="$1"
+	if test "`jq .dependencies.$package`" = "null"; then
+		deps=" $package"
+	fi
+}
+
+function add_npm_dev_dep() {
+	package="$1"
+	if test "`jq .devDependencies.$package`" = "null"; then
+		devDeps=" $package"
+	fi
+}
+
+function run_npm_install() {
+	if ! test -z "$deps"; then
+		npm install --save --no-audit $deps
+	fi
+	if ! test -z "$devDeps"; then
+		npm install --save-dev --no-audit $devDeps
+	fi
+}
+
 if ! which jq &>/dev/null; then
 	echo "jq is not installed, but is required"
 	exit 1
@@ -38,19 +64,18 @@ export projectDir="$PWD"
 echo "Project directory: $projectDir"
 
 echo "Installing tools ..."
-npm install --save-dev --no-audit \
-	eslint \
-	prettier \
-	eslint-config-prettier \
-	eslint-config-standard \
-	eslint-plugin-prettier \
-	eslint-plugin-import \
-	eslint-plugin-node \
-	eslint-plugin-promise \
-	eslint-plugin-standard \
-	@babel/cli \
-	@babel/core \
-	@babel/preset-env
+add_npm_dev_dep eslint
+add_npm_dev_dep prettier
+add_npm_dev_dep eslint-config-prettier
+add_npm_dev_dep eslint-config-standard
+add_npm_dev_dep eslint-plugin-prettier
+add_npm_dev_dep eslint-plugin-import
+add_npm_dev_dep eslint-plugin-node
+add_npm_dev_dep eslint-plugin-promise
+add_npm_dev_dep eslint-plugin-standard
+add_npm_dev_dep @babel/cli
+add_npm_dev_dep @babel/core
+add_npm_dev_dep @babel/preset-env
 
 echo "Setting up .vscode ..."
 mkdir -p .vscode
