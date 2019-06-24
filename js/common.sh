@@ -34,14 +34,14 @@ devDeps=""
 
 function add_npm_dep() {
 	package="$1"
-	if test "`jq ".dependencies['$package']" package.json`" = "null"; then
+	if jq ".dependencies[\"$package\"]" package.json | grep -E '^null$' &>/dev/null; then
 		deps=" $package"
 	fi
 }
 
 function add_npm_dev_dep() {
 	package="$1"
-	if test "`jq ".devDependencies['$package']" package.json`" = "null"; then
+	if jq ".devDependencies[\"$package\"]" package.json | grep -E '^null$' &>/dev/null; then
 		devDeps=" $package"
 	fi
 }
