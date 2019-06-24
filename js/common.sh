@@ -28,7 +28,7 @@ function add_npm_script() {
 		echo "Adding npm script: $action"
 		jq '.scripts = .scripts // {}' package.json > package.new.json
 		mv package.new.json package.json
-		jq ".scripts.$action = \"npm run build -- -w\"" package.json | unexpand -t2 > package.new.json
+		jq ".scripts.$action = \"$cmd\"" package.json | unexpand -t2 > package.new.json
 		mv package.new.json package.json
 	fi
 }
