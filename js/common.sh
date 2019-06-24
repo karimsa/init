@@ -52,9 +52,11 @@ function add_npm_dev_dep() {
 
 function run_npm_install() {
 	if ! test -z "$deps"; then
+		echo "Installing: $deps"
 		npm install --save --no-audit $deps
 	fi
 	if ! test -z "$devDeps"; then
+		echo "Installing: $devDeps"
 		npm install --save-dev --no-audit $devDeps
 	fi
 }
