@@ -7,7 +7,7 @@ source $common
 mkdir -p src
 
 echo "Setting up babel ..."
-fetch_file ".babelrc-node" ".babelrc"
+fetch_file "babelrc-node.json" ".babelrc"
 add_npm_script "build" "babel src -d dist"
 add_npm_script "watch" "npm run build -- -w"
 

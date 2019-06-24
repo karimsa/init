@@ -85,10 +85,10 @@ add_npm_dev_dep @babel/preset-env
 
 echo "Setting up .vscode ..."
 mkdir -p .vscode
-fetch_file ".vscode/extensions.json"
-fetch_file ".vscode/settings.json"
+fetch_file "vscode/extensions.json" ".vscode/extensions.json"
+fetch_file "vscode/settings.json" ".vscode/settings.json"
 
 echo "Setting up linter ..."
-fetch_file ".prettierrc"
-fetch_file ".eslintrc"
+fetch_file "prettier.json" ".prettierrc"
+fetch_file "eslint.json" ".eslintrc"
 add_npm_script "lint" "eslint src/**/*.js"
