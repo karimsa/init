@@ -21,7 +21,7 @@ function add_npm_script() {
 	action="$1"
 	cmd="$2"
 
-	if test "`jq .scripts.$action`" = "null"; then
+	if test "`jq .scripts.$action package.json`" = "null"; then
 		echo "Adding npm script: $action"
 		jq '.scripts = .scripts // {}' package.json > package.new.json && mv package.new.json package.json
 		jq ".scripts.$action = 'npm run build -- -w'" package.json | unexpand -t2 > package.new.json
