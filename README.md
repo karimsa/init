@@ -4,8 +4,9 @@ Scripts to scaffold projects me-style.
 
 ## Usage
 
-**JS library**: `curl -sSL https://init.alibhai.co/js/lib.sh | bash`.
-**React webapp**: `curl -sSL https://init.alibhai.co/js/react.sh | bash`.
+- **JS library**: `curl -sSL https://init.alibhai.co/js/lib.sh | bash`.
+- **React webapp**: `curl -sSL https://init.alibhai.co/js/react.sh | bash`.
+- **Install docker**: `curl -sSL https://init.alibhai.co/docker.sh | bash`
 
 ## License
 
